@@ -22,7 +22,7 @@ class _LanguageState extends State<Language> {
     'Norwegian',
     'Portuguese'
   ];
-  int? selectedindex=null;
+  int? selectedindex;
   @override
   Widget build(BuildContext context) {
     final mediaObj = MediaQuery.of(context).size;
@@ -46,10 +46,10 @@ class _LanguageState extends State<Language> {
                 ),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 30,vertical: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 5),
                     child: GridView.builder(
                       shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisSpacing:15,
                         mainAxisSpacing: 15,
                           crossAxisCount: 2,),
@@ -62,7 +62,7 @@ class _LanguageState extends State<Language> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              color: selectedindex==null?null:selectedindex==index?Color(0xff00e324):null,
+                              color: selectedindex==null?null:selectedindex==index?const Color(0xff00e324):null,
                               border: Border.all(),
                               borderRadius: BorderRadius.circular(30)),
                           child: Center(child: Text(languages[index])),
@@ -80,20 +80,20 @@ class _LanguageState extends State<Language> {
           child: Container(
                       width: 150,
                       height: 43,
-                      margin:EdgeInsets.only(bottom: 30),
+                      margin:const EdgeInsets.only(bottom: 30),
                       decoration: BoxDecoration(
-                         color: Color(0xff00E324),
+                         color: const Color(0xff00E324),
                         border:Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(5))
+                        borderRadius: const BorderRadius.all(Radius.circular(5))
                       ),
-                      child: Center(child: Text('NEXT',style: TextStyle(
+                      child: const Center(child: Text('NEXT',style: TextStyle(
                         fontSize: 24,
                         color: Colors.white
                       ),)),
                     )),
           Container(
             height: appBarHeight,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xFF090815),
               borderRadius: BorderRadius.vertical(
                 bottom: Radius.elliptical(120, 120),
