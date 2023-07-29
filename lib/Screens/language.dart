@@ -1,4 +1,6 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -178,6 +180,9 @@ class _LanguageSelectionState extends State<LanguageSelection> {
       ),
       
       floatingActionButton:selectedLanguage==null?null: FloatingActionButton(onPressed: (){
+        FirebaseFirestore firebaseFirestore=FirebaseFirestore.instance;
+        String uid=FirebaseAuth.instance.currentUser!.uid;
+        FirebaseFirestore.instance.collection('Users').doc(uid).update({'language':selectedLanguage});
         Navigator.pushNamed(context,HomePage.routeName);
       }),
     );

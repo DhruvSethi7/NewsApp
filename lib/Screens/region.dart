@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:newsapp2/Screens/language.dart';
+import 'package:newsapp2/Widgets/signTile.dart';
 import 'package:newsapp2/Widgets/utils.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:csc_picker/csc_picker.dart';
 class RegionSelection extends StatefulWidget {
   const RegionSelection({super.key});
    static String routeName='/regionselection';
@@ -15,7 +17,12 @@ class RegionSelection extends StatefulWidget {
 
 class _RegionSelectionState extends State<RegionSelection> {
   String? selectedCountry=null;
- 
+  @override
+  void initState() {
+    // TODO: implement initState
+    // addDataToFirestore(collectionName, data)
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final mediaobj = MediaQuery.of(context).size;
@@ -164,6 +171,9 @@ class _RegionSelectionState extends State<RegionSelection> {
       ),
       floatingActionButton:selectedCountry==null?null: FloatingActionButton(onPressed: 
       (){
+        FirebaseFirestore firebaseFirestore=FirebaseFirestore.instance;
+        String uid=FirebaseAuth.instance.currentUser!.uid;
+        FirebaseFirestore.instance.collection('Users').doc(uid).update({'country':selectedCountry});
         Navigator.pushNamed(context,LanguageSelection.routeName);
       }),
     );

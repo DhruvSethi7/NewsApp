@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,7 +31,10 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -46,30 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDMeSgE-hFboTh36icF4wNMj39ILBMsZF4',
-    appId: '1:1074601171821:web:196f7d9814ef8d142bd864',
-    messagingSenderId: '1074601171821',
-    projectId: 'newsapp-4008f',
-    authDomain: 'newsapp-4008f.firebaseapp.com',
-    storageBucket: 'newsapp-4008f.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAadomsDfHzIdE_f3fhS2kcjP7EcGf2Ki4',
     appId: '1:1074601171821:android:a1904bffad03224e2bd864',
     messagingSenderId: '1074601171821',
     projectId: 'newsapp-4008f',
     storageBucket: 'newsapp-4008f.appspot.com',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDJBQSAilyPlaK9fX7GDj1ZaUkKREzmmN0',
-    appId: '1:1074601171821:ios:7512e986aaccd8af2bd864',
-    messagingSenderId: '1074601171821',
-    projectId: 'newsapp-4008f',
-    storageBucket: 'newsapp-4008f.appspot.com',
-    iosClientId: '1074601171821-ql4vj2q3f4dlltkosqivr6e10vgunn7i.apps.googleusercontent.com',
-    iosBundleId: 'com.example.newsapp2.RunnerTests',
   );
 }
