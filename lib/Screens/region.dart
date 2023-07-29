@@ -1,34 +1,21 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:newsapp2/Screens/homepage.dart';
+import 'package:newsapp2/Screens/language.dart';
 import 'package:newsapp2/Widgets/utils.dart';
-class LanguageSelection extends StatefulWidget {
-  // const RegionSelection({super.key});
-  static String routeName='/languageselection';
+import 'package:country_picker/country_picker.dart';
+import 'package:csc_picker/csc_picker.dart';
+class RegionSelection extends StatefulWidget {
+  const RegionSelection({super.key});
+   static String routeName='/regionselection';
   @override
-  State<LanguageSelection> createState() => _LanguageSelectionState();
+  State<RegionSelection> createState() => _RegionSelectionState();
 }
 
-class _LanguageSelectionState extends State<LanguageSelection> {
-   String? selectedLanguage;
-   
-   List languages = [
-    'English',
-    'German',
-    'Arabic',
-    'Spanish',
-    'French',
-    'Hebrew',
-    'Italian',
-    'Chinese',
-    'Russian',
-    'Swedish',
-    'Norwegian',
-    'Portuguese'
-  ];
+class _RegionSelectionState extends State<RegionSelection> {
+  String? selectedCountry=null;
+ 
   @override
   Widget build(BuildContext context) {
     final mediaobj = MediaQuery.of(context).size;
@@ -78,60 +65,57 @@ class _LanguageSelectionState extends State<LanguageSelection> {
             child: Column(
               children: [
                 Text(
-                  'Select Your Language',
+                  'Select Your Region',
                   style: TextStyle(
                       fontFamily: 'Inter',
-                      fontSize: 32,
+                      fontSize: 36,
                       fontWeight: FontWeight.w700),
                 ),
                 addverticalSpace(mediaobj.height * 0.04),
                 GestureDetector(
                   onTap: () {
-                    showDialog(context: context, builder:(context){
-                      return Dialog(
-                        insetPadding: EdgeInsets.only(top: mediaobj.height*0.27),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(
-                            width: 2
-                          )
+                    showCountryPicker(
+                      context: context,
+                      showPhoneCode: false,
+                      countryListTheme: CountryListThemeData(
+                        searchTextStyle: TextStyle(
+                          fontFamily: 'Anony',
+                            fontSize: 26,
+                            fontWeight: FontWeight.w700,
                         ),
-                        child:Container(
-                          height: mediaobj.height*0.5,
-                          width: mediaobj.width*0.9,
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(20)
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: ListView.builder(itemBuilder: (context,index){
-                                  return GestureDetector(
-                                    onTap: (){
-                                      selectedLanguage=languages[index];
-                                      setState(() {
-                                      Navigator.pop(context);
-                                      });
-                                    },
-                                    child: Container(
-                                      height: mediaobj.height*0.08,
-                                      width: double.infinity,
-                                      child: Center(child: Text(languages[index]),
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border:Border(bottom: BorderSide()),
-                                        // borderRadius: BorderRadius.circular(20),
-                                        
-                                                                  
-                                      ),
-                                    ),
-                                  );
-                            },itemCount: languages.length,
+                        borderRadius: BorderRadius.circular(20),
+                        padding: EdgeInsets.only(top: 0),
+                        flagSize: 30,
+                        textStyle: TextStyle(
+                            fontFamily: 'Anony',
+                            fontSize: 26,
+                            fontWeight: FontWeight.w700,
                             ),
-                          ),
+                        bottomSheetHeight: mediaobj.height * 0.43,
+                        margin: EdgeInsets.fromLTRB(mediaobj.width * 0.065, 0,
+                            mediaobj.width * 0.065, mediaobj.height * 0.165),
+                        inputDecoration: InputDecoration(
+                          // labelText: 'Search',
+                          hintText: 'Search Country',
+                          hintStyle: TextStyle(
+                              // color: Colors.black,
+                              fontSize: 28,
+                              fontFamily: 'Anony',
+                              fontWeight: FontWeight.w700),
+                          prefixIcon: const Icon(Icons.search,size: 35,color: Colors.black,),
                         ),
-                      );
-                    });
+                      ),
+                      onSelect: (Country country) {
+                        // print('Select country: ${country.displayName}');
+                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('${country.displayNameNoCountryCode}')));
+                        setState(() {
+                          // print(country.)
+                         print(country.displayNameNoCountryCode); 
+                        selectedCountry=country.displayNameNoCountryCode.split( ' ')[0];  
+                        });
+                        
+                      },
+                    );
                   },
                   child: Card(
                     shadowColor: Colors.black,
@@ -149,13 +133,15 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                         height: mediaobj.height * 0.065,
                         child: Row(
                           children: [
-                           
-                            SvgPicture.asset('assets/Icons/language.svg',height: mediaobj.height * 0.065 * 0.7,),
+                            Icon(
+                              Icons.public,
+                              size: mediaobj.height * 0.065 * 0.8,
+                            ),
                             SizedBox(
                               width: 20,
                             ),
                             Text(
-                              selectedLanguage==null?'':selectedLanguage!,
+                              selectedCountry==null?'Country':selectedCountry!,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Anony',
@@ -176,9 +162,9 @@ class _LanguageSelectionState extends State<LanguageSelection> {
           ),
         ],
       ),
-      
-      floatingActionButton:selectedLanguage==null?null: FloatingActionButton(onPressed: (){
-        Navigator.pushNamed(context,HomePage.routeName);
+      floatingActionButton:selectedCountry==null?null: FloatingActionButton(onPressed: 
+      (){
+        Navigator.pushNamed(context,LanguageSelection.routeName);
       }),
     );
   }

@@ -5,7 +5,92 @@ import '../Widgets/utils.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
+  
+  warningdialog(BuildContext context,Size mediaobj){
+    showDialog(context: context, builder:(context) => 
+      Dialog(
+        insetPadding: EdgeInsets.only(top: mediaobj.height*0.22),
+        shape:RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30)
+        ) ,
+        child: Container(
+               height: mediaobj.height * 0.36,
+               width: mediaobj.width * 0.8,
+               padding: EdgeInsets.symmetric(horizontal: 20, vertical:10),
+               decoration: BoxDecoration(
+                   color: Colors.white,
+                   border: Border.all(
+                     width: 2
+                   ),
+                   borderRadius: BorderRadius.circular(30)),
+               child: Column(
+                 // crossAxisAlignment: CrossAxisAlignment.center,
+                 mainAxisSize: MainAxisSize.min,
+                 children: [
+                   SvgPicture.asset('assets/Icons/warning.svg'),
+                   addverticalSpace(mediaobj.height*0.03),
+                   Text(
+                     'Without Sign In you will loose some features ',
+                     style: TextStyle(
+                         shadows: [
+                           Shadow(
+                             offset: Offset(0, 4),
+                             blurRadius: 3
+                             ,color: Colors.black.withOpacity(0.25)
+                           )
+                         ],
+                         fontFamily: 'Inter',
+                         fontSize: 20,
+                         fontWeight: FontWeight.w800),
+                   ),
+                   addverticalSpace(mediaobj.height*0.04),
+                   GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                     child: Container(
+                       height: mediaobj.height * 0.05,
+                       decoration: BoxDecoration(
+                           border: Border.all(width: 2),
+                           borderRadius: BorderRadius.circular(25),
+                           color: Color(0xff00E324)),
+                       child: Center(
+                         child: Text(
+                           'Sign In',
+                           style: TextStyle(
+                             color: Colors.white,
+                               fontSize: 18,
+                               fontWeight: FontWeight.w800,
+                               fontFamily: 'Inter'),
+                         ),
+                       ),
+                     ),
+                   ),
+                   addverticalSpace(mediaobj.height*0.02),
+                   GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                     child: Container(
+                       height: mediaobj.height * 0.05,
+                       decoration: BoxDecoration(
+                           border: Border.all(width: 2),
+                           borderRadius: BorderRadius.circular(25),
+                           color: Color(0xff00E324)),
+                       child: Center(
+                         child: Text('May be later', style: TextStyle(
+                             color: Colors.white,
+                               fontSize: 18,
+                               fontWeight: FontWeight.w800,
+                               fontFamily: 'Inter'),),
+                       ),
+                     ),
+                   )
+                 ],
+               ),
+             ),
+      ),);
+  }
   @override
   Widget build(BuildContext context) {
     final mediaobj = MediaQuery.of(context).size;
@@ -92,7 +177,13 @@ class LoginScreen extends StatelessWidget {
                         fontWeight: FontWeight.w800),
                   ),
                   ElevatedButton(
-                      onPressed: () {},
+                      style: ButtonStyle(
+                        shadowColor: MaterialStatePropertyAll(Colors.black),
+                        elevation: MaterialStatePropertyAll(10)
+                      ), 
+                      onPressed: () {
+                        warningdialog(context, mediaobj);
+                      },
                       child: Container(
                           height: mediaobj.height * 0.053,
                           width: mediaobj.width * 0.3,
@@ -149,7 +240,8 @@ class LoginScreen extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
+         
         ],
       ),
     );
