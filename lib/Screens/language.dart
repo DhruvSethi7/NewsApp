@@ -179,7 +179,12 @@ class _LanguageSelectionState extends State<LanguageSelection> {
         ],
       ),
       
-      floatingActionButton:selectedLanguage==null?null: FloatingActionButton(onPressed: (){
+      floatingActionButton:selectedLanguage==null?null: FloatingActionButton(
+         child: CircleAvatar(radius:26,backgroundColor: Color(0xff00E324),child: Icon(color: Colors.white,Icons.arrow_forward_rounded,size: 35,)),
+       
+        backgroundColor: Colors.black,
+       
+        onPressed: (){
         FirebaseFirestore firebaseFirestore=FirebaseFirestore.instance;
         String uid=FirebaseAuth.instance.currentUser!.uid;
         FirebaseFirestore.instance.collection('Users').doc(uid).update({'language':selectedLanguage});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newsapp2/Screens/region.dart';
 import 'package:newsapp2/Widgets/signTile.dart';
 import '../Widgets/utils.dart';
 
@@ -30,15 +31,15 @@ class LoginScreen extends StatelessWidget {
                    SvgPicture.asset('assets/Icons/warning.svg'),
                    addverticalSpace(mediaobj.height*0.03),
                    Text(
-                     'Without Sign In you will loose some features ',
+                     'Without Sign In you willloose some features ',
                      style: TextStyle(
-                         shadows: [
-                           Shadow(
-                             offset: Offset(0, 4),
-                             blurRadius: 3
-                             ,color: Colors.black.withOpacity(0.25)
-                           )
-                         ],
+                        //  shadows: [
+                        //    Shadow(
+                        //      offset: Offset(0, 4),
+                        //      blurRadius: 3
+                        //      ,color: Colors.black.withOpacity(0.25)
+                        //    )
+                        //  ],
                          fontFamily: 'Inter',
                          fontSize: 20,
                          fontWeight: FontWeight.w800),
@@ -69,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                    addverticalSpace(mediaobj.height*0.02),
                    GestureDetector(
                     onTap: (){
-                      Navigator.pop(context);
+                      Navigator.pushNamedAndRemoveUntil(context,RegionSelection.routeName, (route) => false);
                     },
                      child: Container(
                        height: mediaobj.height * 0.05,
