@@ -5,11 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:newsapp2/Screens/homepage.dart';
+import 'package:newsapp2/Screens/MainScreen.dart';
 import 'package:newsapp2/Widgets/utils.dart';
 class LanguageSelection extends StatefulWidget {
   // const RegionSelection({super.key});
   static String routeName='/languageselection';
+
+  const LanguageSelection({super.key});
   @override
   State<LanguageSelection> createState() => _LanguageSelectionState();
 }
@@ -40,28 +42,28 @@ class _LanguageSelectionState extends State<LanguageSelection> {
           Container(
             height: mediaobj.height * 0.17,
             decoration: BoxDecoration(
-                color: Color(0xff02011d),
+                color: const Color(0xff02011d),
                 boxShadow: [
                   BoxShadow(
-                      color: Color(0xff000000).withOpacity(0.25),
-                      offset: Offset(0, 4),
+                      color: const Color(0xff000000).withOpacity(0.25),
+                      offset: const Offset(0, 4),
                       blurRadius: 4)
                 ],
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(mediaobj.width / 4),
-                    bottomRight: Radius.circular(mediaobj.width / 4))),
+                    bottomLeft: Radius.circular(mediaobj.width / 7,),
+                    bottomRight: Radius.circular(mediaobj.width / 7))),
           ),
           Positioned(
             top: mediaobj.height * 0.17 - mediaobj.width * 0.19,
             left: mediaobj.width / 2 - mediaobj.width * 0.19,
             child: Container(
-              margin: EdgeInsets.all(0),
+              margin: const EdgeInsets.all(0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                      color: Color(0xff000000).withOpacity(0.25),
-                      offset: Offset(0, 4),
+                      color: const Color(0xff000000).withOpacity(0.25),
+                      offset: const Offset(0, 4),
                       blurRadius: 4)
                 ],
               ),
@@ -79,7 +81,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                     mediaobj.height * 0.1),
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Select Your Language',
                   style: TextStyle(
                       fontFamily: 'Inter',
@@ -94,7 +96,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                         insetPadding: EdgeInsets.only(top: mediaobj.height*0.27),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(
+                          side: const BorderSide(
                             width: 2
                           )
                         ),
@@ -118,13 +120,13 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                                     child: Container(
                                       height: mediaobj.height*0.08,
                                       width: double.infinity,
-                                      child: Center(child: Text(languages[index]),
-                                      ),
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         border:Border(bottom: BorderSide()),
                                         // borderRadius: BorderRadius.circular(20),
                                         
                                                                   
+                                      ),
+                                      child: Center(child: Text(languages[index]),
                                       ),
                                     ),
                                   );
@@ -140,31 +142,31 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                     elevation: 5,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
-                      side: BorderSide(color: Colors.black, width: 2),
+                      side: const BorderSide(color: Colors.black, width: 2),
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
                       child: Container(
-                        color: Color(0xff00E324),
-                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        color: const Color(0xff00E324),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
                         width: mediaobj.width * 0.87,
                         height: mediaobj.height * 0.065,
                         child: Row(
                           children: [
                            
                             SvgPicture.asset('assets/Icons/language.svg',height: mediaobj.height * 0.065 * 0.7,),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Text(
                               selectedLanguage==null?'':selectedLanguage!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Anony',
                                   fontSize: 32,
                                   fontWeight: FontWeight.w700),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             SvgPicture.asset('assets/Icons/drop.svg'),
                           ],
                         ),
@@ -180,16 +182,15 @@ class _LanguageSelectionState extends State<LanguageSelection> {
       ),
       
       floatingActionButton:selectedLanguage==null?null: FloatingActionButton(
-         child: CircleAvatar(radius:26,backgroundColor: Color(0xff00E324),child: Icon(color: Colors.white,Icons.arrow_forward_rounded,size: 35,)),
-       
-        backgroundColor: Colors.black,
+         backgroundColor: Colors.black,
        
         onPressed: (){
         FirebaseFirestore firebaseFirestore=FirebaseFirestore.instance;
         String uid=FirebaseAuth.instance.currentUser!.uid;
         FirebaseFirestore.instance.collection('Users').doc(uid).update({'language':selectedLanguage});
-        Navigator.pushNamed(context,HomePage.routeName);
-      }),
+        Navigator.pushNamed(context,MainScreen.routeName);
+      },
+         child: CircleAvatar(radius:26,backgroundColor: Color(0xff00E324),child: Icon(color: Colors.white,Icons.arrow_forward_rounded,size: 35,))),
     );
   }
 }

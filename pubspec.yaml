@@ -96,6 +96,14 @@ flutter:
         - asset: assets/Fonts/Inter-ExtraLight.ttf
         - asset: assets/Fonts/Inter-Light.ttf
         - asset: assets/Fonts/Inter-Medium.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/Fonts/Nunito-Black.ttf
+        - asset: assets/Fonts/Nunito-Bold.ttf
+        - asset: assets/Fonts/Nunito-ExtraBold.ttf
+        - asset: assets/Fonts/Nunito-ExtraLight.ttf
+        - asset: assets/Fonts/Nunito-Light.ttf
+        - asset: assets/Fonts/Nunito-Medium.ttf    
     - family: Dancing
       fonts:
         - asset: assets/Fonts/DancingScript-Regular.ttf

@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:newsapp2/Screens/language.dart';
-import 'package:newsapp2/Widgets/signTile.dart';
 import 'package:newsapp2/Widgets/utils.dart';
 import 'package:country_picker/country_picker.dart';
 class RegionSelection extends StatefulWidget {
@@ -16,7 +13,7 @@ class RegionSelection extends StatefulWidget {
 }
 
 class _RegionSelectionState extends State<RegionSelection> {
-  String? selectedCountry=null;
+  String? selectedCountry;
   @override
   void initState() {
     // TODO: implement initState
@@ -32,28 +29,28 @@ class _RegionSelectionState extends State<RegionSelection> {
           Container(
             height: mediaobj.height * 0.17,
             decoration: BoxDecoration(
-                color: Color(0xff02011d),
+                color: const Color(0xff02011d),
                 boxShadow: [
                   BoxShadow(
-                      color: Color(0xff000000).withOpacity(0.25),
-                      offset: Offset(0, 4),
+                      color: const Color(0xff000000).withOpacity(0.25),
+                      offset: const Offset(0, 4),
                       blurRadius: 4)
                 ],
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(mediaobj.width / 4),
-                    bottomRight: Radius.circular(mediaobj.width / 4))),
+                    bottomLeft: Radius.circular(mediaobj.width / 7),
+                    bottomRight: Radius.circular(mediaobj.width / 7))),
           ),
           Positioned(
             top: mediaobj.height * 0.17 - mediaobj.width * 0.19,
             left: mediaobj.width / 2 - mediaobj.width * 0.19,
             child: Container(
-              margin: EdgeInsets.all(0),
+              margin: const EdgeInsets.all(0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                      color: Color(0xff000000).withOpacity(0.25),
-                      offset: Offset(0, 4),
+                      color: const Color(0xff000000).withOpacity(0.25),
+                      offset: const Offset(0, 4),
                       blurRadius: 4)
                 ],
               ),
@@ -71,7 +68,7 @@ class _RegionSelectionState extends State<RegionSelection> {
                     mediaobj.height * 0.1),
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Select Your Region',
                   style: TextStyle(
                       fontFamily: 'Inter',
@@ -85,15 +82,15 @@ class _RegionSelectionState extends State<RegionSelection> {
                       context: context,
                       showPhoneCode: false,
                       countryListTheme: CountryListThemeData(
-                        searchTextStyle: TextStyle(
+                        searchTextStyle: const TextStyle(
                           fontFamily: 'Anony',
                             fontSize: 26,
                             fontWeight: FontWeight.w700,
                         ),
                         borderRadius: BorderRadius.circular(20),
-                        padding: EdgeInsets.only(top: 0),
+                        padding: const EdgeInsets.only(top: 0),
                         flagSize: 30,
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontFamily: 'Anony',
                             fontSize: 26,
                             fontWeight: FontWeight.w700,
@@ -101,7 +98,7 @@ class _RegionSelectionState extends State<RegionSelection> {
                         bottomSheetHeight: mediaobj.height * 0.43,
                         margin: EdgeInsets.fromLTRB(mediaobj.width * 0.065, 0,
                             mediaobj.width * 0.065, mediaobj.height * 0.165),
-                        inputDecoration: InputDecoration(
+                        inputDecoration: const InputDecoration(
                           // labelText: 'Search',
                           hintText: 'Search Country',
                           hintStyle: TextStyle(
@@ -109,15 +106,13 @@ class _RegionSelectionState extends State<RegionSelection> {
                               fontSize: 28,
                               fontFamily: 'Anony',
                               fontWeight: FontWeight.w700),
-                          prefixIcon: const Icon(Icons.search,size: 35,color: Colors.black,),
+                          prefixIcon: Icon(Icons.search,size: 35,color: Colors.black,),
                         ),
                       ),
                       onSelect: (Country country) {
-                        // print('Select country: ${country.displayName}');
-                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('${country.displayNameNoCountryCode}')));
+                       
                         setState(() {
-                          // print(country.)
-                         print(country.displayNameNoCountryCode); 
+                       
                         selectedCountry=country.displayNameNoCountryCode.split( ' ')[0];  
                         });
                         
@@ -129,13 +124,13 @@ class _RegionSelectionState extends State<RegionSelection> {
                     elevation: 5,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
-                      side: BorderSide(color: Colors.black, width: 2),
+                      side: const BorderSide(color: Colors.black, width: 2),
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
                       child: Container(
-                        color: Color(0xff00E324),
-                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        color: const Color(0xff00E324),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
                         width: mediaobj.width * 0.87,
                         height: mediaobj.height * 0.065,
                         child: Row(
@@ -144,18 +139,18 @@ class _RegionSelectionState extends State<RegionSelection> {
                               Icons.public,
                               size: mediaobj.height * 0.065 * 0.8,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Text(
                               selectedCountry==null?'Country':selectedCountry!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Anony',
                                   fontSize: 32,
                                   fontWeight: FontWeight.w700),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             SvgPicture.asset('assets/Icons/drop.svg'),
                           ],
                         ),
@@ -171,8 +166,6 @@ class _RegionSelectionState extends State<RegionSelection> {
       ),
       floatingActionButton:selectedCountry==null?null: FloatingActionButton(
 
-        child: CircleAvatar(radius:26,backgroundColor: Color(0xff00E324),child: Icon(color: Colors.white,Icons.arrow_forward_rounded,size: 35,)),
-       
         backgroundColor: Colors.black,
         onPressed: 
       (){
@@ -180,7 +173,9 @@ class _RegionSelectionState extends State<RegionSelection> {
         String uid=FirebaseAuth.instance.currentUser!.uid;
         FirebaseFirestore.instance.collection('Users').doc(uid).update({'country':selectedCountry});
         Navigator.pushNamed(context,LanguageSelection.routeName);
-      }),
+      },
+
+        child: const CircleAvatar(radius:26,backgroundColor: Color(0xff00E324),child: Icon(color: Colors.white,Icons.arrow_forward_rounded,size: 35,))),
     );
   }
 }

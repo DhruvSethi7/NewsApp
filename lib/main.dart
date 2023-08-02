@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:newsapp2/Screens/homepage.dart';
+import 'package:newsapp2/Screens/MainScreen.dart';
 import 'package:newsapp2/Screens/language.dart';
 import 'package:newsapp2/Screens/region.dart';
 import 'firebase_options.dart';
@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primarySwatch: Colors.green,
-           
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -68,10 +67,10 @@ class MyApp extends StatelessWidget {
             )),
         routes: {
         RegionSelection.routeName:(context) => const RegionSelection(),
-        LanguageSelection.routeName:(context) => LanguageSelection(),
-        HomePage.routeName:(context) => const HomePage()
+        LanguageSelection.routeName:(context) => const LanguageSelection(),
+        MainScreen.routeName:(context) => MainScreen()
         },    
-        home:const RootPage());
+        home:MainScreen());
   }
 }
 class RootPage extends StatefulWidget {
@@ -87,10 +86,10 @@ class _RootPageState extends State<RootPage> {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot) {
-        print("Status is${snapshot.connectionState}");
+
         if (snapshot.connectionState == ConnectionState.active) {
           User? user = snapshot.data;
-          print('User is'+user.toString());
+
           if (user == null) {
             return const LoginScreen(); // If user not signed in return Login Page
           } else {
@@ -98,13 +97,13 @@ class _RootPageState extends State<RootPage> {
               future: isOnboardingComplete(),
               builder: (BuildContext context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  print("Data is ${snapshot.data.runtimeType}");
+      
 
                   if (snapshot.data == true) {
-                    print('homepage shifted');
-                    return const HomePage();  // If onboarding is complete return Home Page
+                    
+                    return MainScreen();  // If onboarding is complete return Home Page
                   } else {
-                    print("yahi aya");
+                    
                     return const RegionSelection();  // If onboarding is not complete return Onboarding Page
                   }
                 } else {

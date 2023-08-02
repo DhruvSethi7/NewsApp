@@ -18,17 +18,15 @@ class SignTile extends StatelessWidget {
     return GestureDetector(
       onTap: ()async{
        if(title=='Google'){ 
-
        UserCredential? userCredential=await signInWithGoogle();
        if(userCredential!=null){
-       addDataToFirestore(userCredential,'Users',{'id':FirebaseAuth.instance.currentUser!.uid,'name':userCredential.user!.displayName,'email':userCredential.user!.email,'profileurl':userCredential.user!.photoURL});
+       addDataToFirestore(userCredential,'Users',{'id':FirebaseAuth.instance.currentUser!.uid,'name':userCredential.user!.displayName,'email':userCredential.user!.email,'profileurl':userCredential.user!.photoURL,'provider':'google'});
        }
        }
        else{
         //  Twitter login
-        
        UserCredential userCredential=await signInWithTwitter();
-       addDataToFirestore(userCredential,'Users',{'id':FirebaseAuth.instance.currentUser!.uid,'name':userName,'email':userCredential.user!.email,'profileurl':profileUrl});
+       addDataToFirestore(userCredential,'Users',{'id':FirebaseAuth.instance.currentUser!.uid,'name':userName,'email':userCredential.user!.email,'profileurl':profileUrl,'provider':'twitter'});
        }
 
       },
