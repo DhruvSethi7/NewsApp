@@ -68,9 +68,9 @@ class MyApp extends StatelessWidget {
         routes: {
         RegionSelection.routeName:(context) => const RegionSelection(),
         LanguageSelection.routeName:(context) => const LanguageSelection(),
-        MainScreen.routeName:(context) => MainScreen()
+        MainScreen.routeName:(context) => const MainScreen()
         },    
-        home:MainScreen());
+        home:const RootPage());
   }
 }
 class RootPage extends StatefulWidget {
@@ -101,7 +101,7 @@ class _RootPageState extends State<RootPage> {
 
                   if (snapshot.data == true) {
                     
-                    return MainScreen();  // If onboarding is complete return Home Page
+                    return const MainScreen();  // If onboarding is complete return Home Page
                   } else {
                     
                     return const RegionSelection();  // If onboarding is not complete return Onboarding Page

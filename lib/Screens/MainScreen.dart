@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import './homepage.dart';
+BuildContext? globalcontext;
 class MainScreen extends StatefulWidget {
   static String routeName='/mainscreen';
+
+  const MainScreen({super.key});
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -9,20 +12,26 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   final tabs = [
-    HomePage(),
-    LocalNews(),
-    WorldNews(),
+    const HomePage(),
+    const LocalNews(),
+    const WorldNews(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: tabs[_currentIndex],
+      drawer: const MyDrawer(),
+      body: Builder(
+        builder: (context1) {
+          globalcontext=context1;
+          return tabs[_currentIndex];
+        }
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        backgroundColor: Color(0xff02011D),
+        backgroundColor: const Color(0xff02011D),
         unselectedItemColor: Colors.white,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
