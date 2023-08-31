@@ -54,10 +54,19 @@ class _RegionSelectionState extends State<RegionSelection> {
                       blurRadius: 4)
                 ],
               ),
-              child: CircleAvatar(
-                backgroundColor: Colors.grey,
-                radius: mediaobj.width * 0.19,
-              ),
+              child:CircleAvatar(
+                    radius: mediaobj.width * 0.19,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                        radius: mediaobj.width * 0.182,
+                        backgroundImage: Image.asset('assets/Images/World.png').image,
+                      child: ClipOval(child: Container(
+                         
+                        // child: SvgPicture.asset('assets/Images/logo.svg',fit: BoxFit.contain,)
+                        )
+                        ),
+                    ),
+                  ),
             ),
           ),
           Container(

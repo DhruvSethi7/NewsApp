@@ -68,9 +68,18 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                 ],
               ),
               child: CircleAvatar(
-                backgroundColor: Colors.grey,
-                radius: mediaobj.width * 0.19,
-              ),
+                    radius: mediaobj.width * 0.19,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                        radius: mediaobj.width * 0.182,
+                        backgroundImage: Image.asset('assets/Images/World.png').image,
+                      child: ClipOval(child: Container(
+                         
+                        // child: SvgPicture.asset('assets/Images/logo.svg',fit: BoxFit.contain,)
+                        )
+                        ),
+                    ),
+                  ),
             ),
           ),
           Container(
@@ -190,7 +199,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
         FirebaseFirestore.instance.collection('Users').doc(uid).update({'language':selectedLanguage});
         Navigator.pushNamed(context,MainScreen.routeName);
       },
-         child: CircleAvatar(radius:26,backgroundColor: Color(0xff00E324),child: Icon(color: Colors.white,Icons.arrow_forward_rounded,size: 35,))),
+         child: const CircleAvatar(radius:26,backgroundColor: Color(0xff00E324),child: Icon(color: Colors.white,Icons.arrow_forward_rounded,size: 35,))),
     );
   }
 }

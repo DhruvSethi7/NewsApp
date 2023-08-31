@@ -1,14 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:newsapp2/Screens/region.dart';
+import 'package:newsapp2/Screens/language.dart';
 import 'package:newsapp2/Widgets/signTile.dart';
 import '../Widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin {
   warningdialog(BuildContext context, Size mediaobj) {
     showDialog(
       context: context,
@@ -87,6 +92,12 @@ class LoginScreen extends StatelessWidget {
                       // 'fieldName': 'value',
                     });
                   } on FirebaseAuthException catch (e) {
+                    print(e.code);
+                    if(e.code=='network-request-failed'){
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went  Wrong')));
+                      return;
+                    }
                     switch (e.code) {
                       case "operation-not-allowed":
                         print(
@@ -97,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                     }
                   }
                   Navigator.pushNamedAndRemoveUntil(
-                      context, RegionSelection.routeName, (route) => false);
+                      context, LanguageSelection.routeName, (route) => false);
                 },
                 child: Container(
                   height: mediaobj.height * 0.05,
@@ -123,16 +134,49 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+  late AnimationController _controller;
+  late Animation<Offset> _positionAnimation;
+   late Animation<Offset> _positionAnimation2;
+  late Animation<double> _sizeAnimation;
+   @override
+  void initState() {
+    super.initState();
 
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    _positionAnimation2 = Tween<Offset>(
+      begin: const Offset(0,-1),
+      end: const Offset(0,0),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut)); 
+    _positionAnimation = Tween<Offset>(
+      begin: const Offset(0.8,2),
+      end: const Offset(0.8, 1.4),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut)); 
+    _sizeAnimation = Tween<double>(
+      begin: 1.2,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final mediaobj = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: [
           Container(
             padding: EdgeInsets.only(
-                top: mediaobj.height * 0.345 +
+                top: mediaobj.height * 0.3 +
                     mediaobj.width * 0.19 +
                     mediaobj.height * 0.1),
             child: SizedBox(
@@ -230,49 +274,59 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            height: mediaobj.height * 0.345,
-            decoration: BoxDecoration(
-                color: const Color(0xff02011d),
-                boxShadow: [
-                  BoxShadow(
-                      color: const Color(0xff000000).withOpacity(0.25),
-                      offset: const Offset(0, 4),
-                      blurRadius: 4)
-                ],
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(mediaobj.width / 5),
-                    bottomRight: Radius.circular(mediaobj.width / 5))),
-          ),
-          Positioned(
-            top: mediaobj.height * 0.345 - mediaobj.width * 0.19,
-            left: mediaobj.width / 2 - mediaobj.width * 0.19,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                          color: const Color(0xff000000).withOpacity(0.25),
-                          offset: const Offset(0, 4),
-                          blurRadius: 4)
-                    ],
-                  ),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.grey,
-                    radius: mediaobj.width * 0.19,
-                  ),
-                ),
-                const Text(
-                  'NAME',
-                  style: TextStyle(fontSize: 34, fontFamily: 'Inter'),
-                )
-              ],
+          SlideTransition(
+            position: _positionAnimation2,
+            child: Container(
+              height: mediaobj.height * 0.345,
+              decoration: BoxDecoration(
+                  color: const Color(0xff02011d),
+                  boxShadow: [
+                    BoxShadow(
+                        color: const Color(0xff000000).withOpacity(0.25),
+                        offset: const Offset(0, 4),
+                        blurRadius: 4)
+                  ],
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(mediaobj.width / 5),
+                      bottomRight: Radius.circular(mediaobj.width / 5))),
             ),
           ),
+          SlideTransition(
+      position: _positionAnimation,
+      child: ScaleTransition(
+        scale: _sizeAnimation,
+        child: Positioned(
+            top: mediaobj.height * 0.345 - mediaobj.width * 0.19,
+            left: mediaobj.width / 2 - mediaobj.width * 0.19,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                margin: const EdgeInsets.all(0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xff000000).withOpacity(0.25),
+                      offset: const Offset(0, 4),
+                      blurRadius: 4,
+                    ),
+                  ],
+                ),
+                child: CircleAvatar(
+                  radius: mediaobj.width * 0.19,
+                  backgroundColor: Colors.white,
+                  child: CircleAvatar(
+                    radius: mediaobj.width * 0.182,
+                    backgroundImage: const AssetImage('assets/Images/World.png'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    )
         ],
       ),
     );

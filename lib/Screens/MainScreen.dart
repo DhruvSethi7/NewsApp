@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import './homepage.dart';
+import './localpage.dart';
+import './headlinepage.dart';
+import '../Widgets/myDrawer.dart';
 BuildContext? globalcontext;
 class MainScreen extends StatefulWidget {
   static String routeName='/mainscreen';
