@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newsapp2/Screens/gptPreviewScreen.dart';
+import 'package:newsapp2/Screens/gptScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './homepage.dart';
 import './localpage.dart';
-import './headlinepage.dart';
 import '../Widgets/myDrawer.dart';
+  int curremtIndex = 0;
 BuildContext? globalcontext;
 class MainScreen extends StatefulWidget {
   static String routeName='/mainscreen';
@@ -13,12 +17,27 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
+
   final tabs = [
     const HomePage(),
     const LocalNews(),
-    const WorldNews(),
+    const GptPreview(),
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    changeItem();
+  }
+  void changeItem()async{
+   final prefs=await SharedPreferences.getInstance();
+   if(prefs.getBool('preview')!=null && prefs.getBool('preview')!){
+     tabs[2]=const GptScreen();
+     setState(() {
+       
+     });
+   }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,30 +46,30 @@ class _MainScreenState extends State<MainScreen> {
       body: Builder(
         builder: (context1) {
           globalcontext=context1;
-          return tabs[_currentIndex];
+          return tabs[curremtIndex];
         }
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: curremtIndex,
         backgroundColor: const Color(0xff02011D),
         unselectedItemColor: Colors.white,
-        items: const [
+        items:  [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home,size: curremtIndex==0?30:20,),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_activity),
+            icon: Icon(Icons.local_activity,size: curremtIndex==1?30:20,),
             label: 'Local',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.public),
-            label: 'World',
+            icon: SvgPicture.asset('assets/Icons/robotsleep.svg',height: curremtIndex==2?30:20,width: curremtIndex==0?30:20,color: curremtIndex==2?Colors.green:Colors.white,),
+            label: 'ASK AI',
           ),
         ],
         onTap: (index) {
           setState(() {
-            _currentIndex = index;
+            curremtIndex = index;
           });
         },
       ),

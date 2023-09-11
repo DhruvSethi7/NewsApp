@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:newsapp2/Provider/databse.dart';
+import 'package:newsapp2/Provider/newsprovider.dart';
 import 'package:newsapp2/Screens/newsDescription.dart';
 
 FlutterTts flutterTts = FlutterTts();
 
-class NewsTile extends StatefulWidget {
+class NewsTile extends ConsumerStatefulWidget {
   final Size mediaObj;
   final String authorName;
   final String title;
@@ -19,16 +22,31 @@ class NewsTile extends StatefulWidget {
       required this.imageUrl,
       required this.description,
       required this.publishDate});
-          
+
   @override
-  State<NewsTile> createState() => _NewsTileState();
+  ConsumerState<NewsTile> createState() => _NewsTileState();
 }
 
-class _NewsTileState extends State<NewsTile> {
+class _NewsTileState extends ConsumerState<NewsTile> {
   bool isPlaying = false;
+  bool saved=false;
+  FlutterTts flutterTts=FlutterTts();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final mediaobj = MediaQuery.of(context).size;
+    final isBookmarked = ref.watch(bookmarkedProvider(widget.title));
+    final voiceprov=ref.watch(voiceProvier);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -36,18 +54,16 @@ class _NewsTileState extends State<NewsTile> {
             MaterialPageRoute(
                 builder: (context) => NewsDescription(
                       authorName: widget.authorName,
-                      description:
-                          widget.description,
+                      description: widget.description,
                       imageUrl: widget.imageUrl,
                       title: widget.title,
-                      publishDate:widget.publishDate,
+                      publishDate: widget.publishDate,
                     )));
       },
       child: Card(
-          
           color: const Color(0xfff8f9f8),
           borderOnForeground: false,
-          margin: const EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.fromLTRB(10, 0, 10,10),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15))),
           child: ClipRRect(
@@ -68,14 +84,12 @@ class _NewsTileState extends State<NewsTile> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
-                      widget.title + widget.title,
+                      widget.title ,
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w700),
                     ),
                   ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // )  ,
+               
                   Padding(
                     padding: const EdgeInsets.all(15),
                     child: Row(
@@ -84,27 +98,47 @@ class _NewsTileState extends State<NewsTile> {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Icon(Icons.bookmark_border_outlined),
+                        IconButton(
+                          icon: saved ? const Icon(
+                                    Icons.bookmark,
+                                    color: Colors.green,
+                                  )
+                                : const Icon(Icons.bookmark_border_outlined),
+                          onPressed: () async {
+                           DatabaseHelper.instance.toggleBookmark({
+                              'title': widget.title,
+                              'publishedTime': widget.publishDate,
+                              'imageUrl': widget.imageUrl,
+                              'webUrl': "pending",
+                              'description': widget.description,
+                              'authorName': widget.authorName,
+                            }).then((value) {
+                              setState(() {
+                                saved=value;
+                              });
+                            }
+                          
+                            );
+                          },
+                        ),
                         const SizedBox(
                           width: 5,
                         ),
-                         Text(
+                        Text(
                           widget.publishDate.toString(),
-                          style: const TextStyle(color: Colors.black54, fontSize: 12),
+                          style: const TextStyle(
+                              color: Colors.black54, fontSize: 12),
                         ),
                         const Spacer(),
                         IconButton(
                             onPressed: () {
-                              setState(() {
-                                isPlaying = !isPlaying;
-                                print(isPlaying);
-                              });
+                             voiceprov.speakText(widget.title);
                             },
                             icon: Image.asset(
-                              isPlaying
+                              voiceprov.currentTitle==widget.title
                                   ? 'assets/Icons/speakeron.png'
                                   : 'assets/Icons/speakeroff.png',
-                              height: isPlaying ? 24 : 22,
+                              height: voiceprov.currentTitle==widget.title ? 24 : 22,
                             ))
                         // Icon(Icons.speak)
                       ],

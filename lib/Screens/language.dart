@@ -1,9 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:newsapp2/Screens/MainScreen.dart';
 import 'package:newsapp2/Widgets/utils.dart';
@@ -21,6 +19,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
    
    List languages = [
     'English',
+    'Hindi',
     'German',
     'Arabic',
     'Spanish',
@@ -171,7 +170,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                               selectedLanguage==null?'':selectedLanguage!,
                               style: const TextStyle(
                                   color: Colors.white,
-                                  fontFamily: 'Anony',
+                                   fontFamily: 'Outfit',
                                   fontSize: 32,
                                   fontWeight: FontWeight.w700),
                             ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:newsapp2/Provider/newsprovider.dart';
 
-class NewsDescription extends StatefulWidget {
+class NewsDescription extends ConsumerStatefulWidget {
    NewsDescription({super.key,required this.authorName,required this.description,required this.imageUrl,required this.publishDate,required this.title});
   String title;
   String description;
@@ -8,11 +11,24 @@ class NewsDescription extends StatefulWidget {
   String imageUrl;
   String authorName;
   @override
-  State<NewsDescription> createState() => _NewsDescriptionState();
+  ConsumerState<NewsDescription> createState() => _NewsDescriptionState();
 }
 
-class _NewsDescriptionState extends State<NewsDescription> {
+class _NewsDescriptionState extends ConsumerState<NewsDescription> {
   bool isPlaying=false;
+  FlutterTts flutterTts=FlutterTts();
+  @override
+  void initState() {
+    // TODO: implement initState
+    ref.read(voiceProvier).tts.stop();
+    super.initState();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    flutterTts.stop();
+  }
   @override
   Widget build(BuildContext context) {
     final mediaobj=MediaQuery.of(context).size;
@@ -64,9 +80,15 @@ class _NewsDescriptionState extends State<NewsDescription> {
   child: FloatingActionButton(
     backgroundColor: Colors.white,
     onPressed: () {
-      setState(() {
-        isPlaying = !isPlaying;
-      });
+     if(!isPlaying){
+      flutterTts.speak(widget.description);
+     }
+     else{
+      flutterTts.stop();
+     }
+     setState(() {
+       isPlaying=!isPlaying;
+     });
     },
     child: Image.asset(
       isPlaying ? 'assets/Icons/speakeron.png' : 'assets/Icons/speakeroff.png',

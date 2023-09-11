@@ -50,7 +50,7 @@ class SignTile extends StatelessWidget {
               const SizedBox(width: 10,),
               Text(
                 title,
-                style: const TextStyle(fontFamily: 'Inter',fontSize: 24,fontWeight: FontWeight.w600),
+                style: const TextStyle( fontFamily: 'Outfit',fontSize: 24,fontWeight: FontWeight.w600),
               )
             ],
           ),

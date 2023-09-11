@@ -35,7 +35,8 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
               SvgPicture.asset('assets/Icons/warning.svg'),
               addverticalSpace(mediaobj.height * 0.03),
               const Text(
-                'Without Sign In you willloose some features ',
+                'Without Sign In you will loose some features ',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     //  shadows: [
                     //    Shadow(
@@ -44,7 +45,8 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                     //      ,color: Colors.black.withOpacity(0.25)
                     //    )
                     //  ],
-                    fontFamily: 'Inter',
+                     fontFamily: 'Outfit',
+
                     fontSize: 20,
                     fontWeight: FontWeight.w800),
               ),
@@ -189,6 +191,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                   Text(
                     'Sign In',
                     style: TextStyle(
+                      fontFamily: 'Outfit',
                         fontSize: 26,
                         fontWeight: FontWeight.w800,
                         shadows: <Shadow>[
@@ -224,6 +227,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                       const Text(
                         'OR',
                         style: TextStyle(
+                             fontFamily: 'Outfit',
                             fontSize: 20, fontWeight: FontWeight.w600),
                       ),
                       SizedBox(
@@ -242,6 +246,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                   Text(
                     'Skip Sign In',
                     style: TextStyle(
+                      
                         shadows: <Shadow>[
                           Shadow(
                             offset: const Offset(0, 3),
@@ -249,7 +254,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                             color: const Color(0xff000000).withOpacity(0.25),
                           ),
                         ],
-                        fontFamily: 'Inter',
+                         fontFamily: 'Outfit',
                         fontSize: 24,
                         fontWeight: FontWeight.w800),
                   ),
@@ -267,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                           child: const Center(
                             child: Text(
                               'NEXT',
-                              style: TextStyle(fontSize: 24),
+                              style: TextStyle( fontFamily: 'Outfit',fontSize: 24),
                             ),
                           )))
                 ],
